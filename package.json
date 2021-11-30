@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start-dev": "nodemon server.js"
+  },
+  "name": "cbo-project",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muneebulislam/cbo-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muneebulislam/cbo-project/issues"
+  },
+  "homepage": "https://github.com/muneebulislam/cbo-project#readme",
+  "description": ""
+}
