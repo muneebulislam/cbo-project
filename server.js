@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const staffModel = require('./models/staffModel');
 
 const app = express();
 const PORT = 8080;
@@ -11,45 +12,73 @@ app.use(express.urlencoded({
 
 app.use(cors());
 
-const users = [];
-app.get('/users', (req, res) => {
-    res.json(users);
+app.get('/createTable', (request, response) => {
+    const db = staffModel.getStaffModelInstance();
+
+    const result = db.createTable();
+    
+    result
+    .then(() => console.log("table created!"))
+    .catch(err => console.log(err));
+})
+// create
+app.post('/insert', (request, response) => {
+    const { name } = request.body;
+    const db = staffModel.getStaffModelInstance();
+    
+    const result = db.insertNewName(name);
+
+    result
+    .then(data => response.json({ data: data}))
+    .catch(err => console.log(err));
+});
+
+// read
+app.get('/getAll', (request, response) => {
+    const db = staffModel.getStaffModelInstance();
+
+    const result = db.getAllData();
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
 })
 
-// app.post('/users', async (req, res) => {
-//     try {
-//         const name = req.body.name;
-//         const password = req.body.password;
-//         const hashedPassword = await getHash(password);
-//         const user = {
-//             name: name,
-//             password: hashedPassword
-//         };
-//         users.push(user);
-//         //send to database
-//         res.status(201).send();
-//     } catch (err) {
-//         res.status(500).send();
-//     }
+// update
+app.patch('/update', (request, response) => {
+    const { id, name } = request.body;
+    const db = staffModel.getStaffModelInstance();
 
-// })
+    const result = db.updateNameById(id, name);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
 
-// app.post('/users/login', async (req, res) => {
-//     const user = users.find(user => user.name == req.body.name);
-//     if (user == null) {
-//         return res.status(400).send("User not found")
-//     }
+// delete
+app.delete('/delete/:id', (request, response) => {
+    const { id } = request.params;
+    const db = staffModel.getStaffModelInstance();
 
-//     try {
-//         if (await compareHash(req.body.password, user.password)) {
-//             res.send('Login succeed!')
-//         } else {
-//             res.send('Login filed!')
-//         }
-//     } catch {
-//         res.status(500).send();
-//     }
-// })
+    const result = db.deleteRowById(id);
+    
+    result
+    .then(data => response.json({success : data}))
+    .catch(err => console.log(err));
+});
+
+app.get('/search/:name', (request, response) => {
+    const { name } = request.params;
+    const db = staffModel.getStaffModelInstance();
+
+    const result = db.searchByName(name);
+    
+    result
+    .then(data => response.json({data : data}))
+    .catch(err => console.log(err));
+})
+
 
 
 app.use(express.static(__dirname+'/pages'));

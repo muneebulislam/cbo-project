@@ -1,12 +1,11 @@
 GET http://localhost:8080/users
 
 ###
-POST http://localhost:8080/users 
+POST http://localhost:8080/insert 
 content-type: application/json
 
 {
-    "name": "john",
-    "password": "mypass"
+    "name": "rohn"
 }
 
 ###
