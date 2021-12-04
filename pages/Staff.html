@@ -18,10 +18,18 @@
     </nav>
     <h1>Staff</h1>
     <main class="main">
-        <label>Name:</label>
+        <label>Employee Name:</label>
         <input type="text" id="name-input">
         <button id="add-name-btn">Add Name</button>
 
+        <label>Email:</label>
+        <input type="text" id="email-input">
+        <button id="add-email-btn">Add Email</button>
+
+        <label>Employee id:</label>
+        <input type="text" id="id-input">
+        <button id="add-id-btn">Add Employee id</button>
+        
         <br><br><br>
         <div>
            <input placeholder="search by name" id="search-input">
@@ -32,7 +40,9 @@
             <thead>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Date Added</th>
+                <th>Email</th>
+                <th>Employee id</th>
+                <th>First Employed</th>
                 <th>Delete</th>
                 <th>Edit</th>
             </thead>
@@ -40,8 +50,8 @@
         </table>
 
         <section hidden id="update-row">
-            <label>Name:</label>
-            <input type="text" id="update-name-input">
+            <label>Enter New Email:</label>
+            <input type="text" id="update-email-input">
             <button id="update-row-btn">Update</button>
         </section>
     </main>

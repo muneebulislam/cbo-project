@@ -40,14 +40,14 @@ function deleteRowById(id) {
 function handleEditRow(id) {
     const updateSection = document.getElementById('update-row');
     updateSection.hidden = false;
-    document.getElementById('update-name-input').dataset.id = id;
+    document.getElementById('update-email-input').dataset.id = id;
 }
 
 updateBtn.onclick = function() {
-    const updateNameInput = document.getElementById('update-name-input');
+    const updateEmailInput = document.getElementById('update-email-input');
 
 
-    console.log(updateNameInput);
+    console.log(updateEmailInput);
 
     fetch('http://localhost:8080/staff/update', {
         method: 'PATCH',
@@ -55,8 +55,8 @@ updateBtn.onclick = function() {
             'Content-type' : 'application/json'
         },
         body: JSON.stringify({
-            id: updateNameInput.dataset.id,
-            name: updateNameInput.value
+            id: updateEmailInput.dataset.id,
+            email: updateEmailInput.value
         })
     })
     .then(response => response.json())
@@ -71,16 +71,17 @@ updateBtn.onclick = function() {
 const addBtn = document.getElementById('add-name-btn');
 
 addBtn.onclick = function () {
-    const nameInput = document.getElementById('name-input');
-    const name = nameInput.value;
-    nameInput.value = "";
+    const nameInput = document.getElementById('name-input').value;
+    const emailInput = document.getElementById('email-input').value;
+    const idInput = document.getElementById('id-input').value;
+    const fistEmployed = new Date().toLocaleDateString();
 
     fetch('http://localhost:8080/staff/insert', {
         headers: {
             'Content-type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({ name : name})
+        body: JSON.stringify({ name : nameInput, email: emailInput, employee_Id: idInput, first_employed: fistEmployed})
     })
     .then(response => response.json())
     .then(data => insertRowIntoTable(data['data']));
@@ -95,8 +96,8 @@ function insertRowIntoTable(data) {
 
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
-            if (key === 'dateAdded') {
-                data[key] = new Date(data[key]).toLocaleString();
+            if (key === 'first_employed') {
+                data[key] = new Date(data[key]).toLocaleDateString();
             }
             tableHtml += `<td>${data[key]}</td>`;
         }
@@ -115,25 +116,23 @@ function insertRowIntoTable(data) {
     }
 }
 
-function loadHTMLTable(data) {
-    const table = document.querySelector('table tbody');
-
-    if (data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+function LoadHTMLTable(myData) {
+    if (myData.length === 0) {
+        document.getElementById("tbody").innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
         return;
     }
+    let tableContent = "";
+    let dataObject = myData;
+    for (let i = 0; i < dataObject.length; i++) {
+      let tableRow = `<tr>
+       <td>${dataObject[i].id}</td>
+       <td>${dataObject[i].name}</td>
+       <td>${dataObject[i].email}</td>
+       <td>${dataObject[i].employee_Id}</td>
+       <td>${dataObject[i].first_employed}</td>
+       </tr>`;
+      tableContent += tableRow;
+    }
 
-    let tableHtml = "";
-
-    data.forEach(function ({id, name, date_added}) {
-        tableHtml += "<tr>";
-        tableHtml += `<td>${id}</td>`;
-        tableHtml += `<td>${name}</td>`;
-        tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`;
-        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
-        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
-        tableHtml += "</tr>";
-    });
-
-    table.innerHTML = tableHtml;
-}
+    document.getElementById("tbody").innerHTML = tableContent;
+  }

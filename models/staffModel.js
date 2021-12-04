@@ -24,7 +24,7 @@ class StaffModel {
     async createTable() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "CREATE TABLE IF NOT EXISTS posts (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), date_added DATETIME, PRIMARY KEY (id))";
+                const query = "CREATE TABLE IF NOT EXISTS staff (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), employee_Id int , first_employed VARCHAR(50), PRIMARY KEY (id))";
 
                 con.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
@@ -40,7 +40,7 @@ class StaffModel {
     async getAllData() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM posts;";
+                const query = "SELECT * FROM staff ORDER BY first_employed DESC";
 
                 con.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
@@ -55,13 +55,13 @@ class StaffModel {
     }
 
 
-    async insertNewName(name) {
+    async insertNewRecord(name, employee_Id, email, employee_id, first_employed ) {
         try {
-            const dateAdded = new Date();
+            const date = new Date().toLocaleDateString();
             const insertId = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO posts (name, date_added) VALUES (?,?);";
+                const query = "INSERT INTO staff (name, employee_Id, email, employee_id, first_employed) VALUES (?,?,?,?);";
 
-                con.query(query, [name, dateAdded] , (err, result) => {
+                con.query(query, [name, employee_Id, email, employee_id, first_employed] , (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.insertId);
                 })
@@ -69,7 +69,9 @@ class StaffModel {
             return {
                 id : insertId,
                 name : name,
-                dateAdded : dateAdded
+                employee_Id: employee_Id,
+                email: email,
+                first_employed: date
             };
         } catch (error) {
             console.log(error);
@@ -80,7 +82,7 @@ class StaffModel {
         try {
             id = parseInt(id, 10); 
             const response = await new Promise((resolve, reject) => {
-                const query = "DELETE FROM posts WHERE id = ?";
+                const query = "DELETE FROM staff WHERE id = ?";
     
                 con.query(query, [id] , (err, result) => {
                     if (err) reject(new Error(err.message));
@@ -95,13 +97,13 @@ class StaffModel {
         }
     }
 
-    async updateNameById(id, name) {
+    async updateNameById(id, email) {
         try {
             id = parseInt(id, 10); 
             const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE posts SET name = ? WHERE id = ?";
+                const query = "UPDATE staff SET email = ? WHERE id = ?";
     
-                con.query(query, [name, id] , (err, result) => {
+                con.query(query, [email, id] , (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
                 })
@@ -117,7 +119,7 @@ class StaffModel {
     async searchByName(name) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM posts WHERE name = ?;";
+                const query = "SELECT * FROM staff WHERE name = ?;";
 
                 con.query(query, [name], (err, results) => {
                     if (err) reject(new Error(err.message));
