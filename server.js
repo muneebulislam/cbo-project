@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const staffModel = require('./models/staffModel');
+const staffRoutes = require('./routes/staffRoutes');
 
 const app = express();
 const PORT = 8080;
@@ -12,76 +13,9 @@ app.use(express.urlencoded({
 
 app.use(cors());
 
-app.get('/createTable', (request, response) => {
-    const db = staffModel.getStaffModelInstance();
+app.use("/staff", staffRoutes);
 
-    const result = db.createTable();
-    
-    result
-    .then(() => console.log("table created!"))
-    .catch(err => console.log(err));
-})
-// create
-app.post('/insert', (request, response) => {
-    const { name } = request.body;
-    const db = staffModel.getStaffModelInstance();
-    
-    const result = db.insertNewName(name);
-
-    result
-    .then(data => response.json({ data: data}))
-    .catch(err => console.log(err));
-});
-
-// read
-app.get('/getAll', (request, response) => {
-    const db = staffModel.getStaffModelInstance();
-
-    const result = db.getAllData();
-    
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
-
-// update
-app.patch('/update', (request, response) => {
-    const { id, name } = request.body;
-    const db = staffModel.getStaffModelInstance();
-
-    const result = db.updateNameById(id, name);
-    
-    result
-    .then(data => response.json({success : data}))
-    .catch(err => console.log(err));
-});
-
-// delete
-app.delete('/delete/:id', (request, response) => {
-    const { id } = request.params;
-    const db = staffModel.getStaffModelInstance();
-
-    const result = db.deleteRowById(id);
-    
-    result
-    .then(data => response.json({success : data}))
-    .catch(err => console.log(err));
-});
-
-app.get('/search/:name', (request, response) => {
-    const { name } = request.params;
-    const db = staffModel.getStaffModelInstance();
-
-    const result = db.searchByName(name);
-    
-    result
-    .then(data => response.json({data : data}))
-    .catch(err => console.log(err));
-})
-
-
-
-app.use(express.static(__dirname+'/pages'));
+app.use(express.static(__dirname + '/pages'));
 
 app.listen(PORT, () => {
     console.log(`server listening on port: ${PORT}`);

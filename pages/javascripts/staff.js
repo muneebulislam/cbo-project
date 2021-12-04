@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:8080/getAll')
+    fetch('http://localhost:8080/staff/getAll')
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
     
@@ -20,13 +20,13 @@ const searchBtn = document.getElementById('search-btn');
 searchBtn.onclick = function() {
     const searchValue = document.getElementById('search-value');('search-input').value;
 
-    fetch('http://localhost:8080/search/' + searchValue)
+    fetch('http://localhost:8080/staff/search/' + searchValue)
     .then(response => response.json())
     .then(data => loadHTMLTable(data['data']));
 }
 
 function deleteRowById(id) {
-    fetch('http://localhost:8080/delete/' + id, {
+    fetch('http://localhost:8080/staff/delete/' + id, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -49,7 +49,7 @@ updateBtn.onclick = function() {
 
     console.log(updateNameInput);
 
-    fetch('http://localhost:8080/update', {
+    fetch('http://localhost:8080/staff/update', {
         method: 'PATCH',
         headers: {
             'Content-type' : 'application/json'
@@ -75,7 +75,7 @@ addBtn.onclick = function () {
     const name = nameInput.value;
     nameInput.value = "";
 
-    fetch('http://localhost:8080/insert', {
+    fetch('http://localhost:8080/staff/insert', {
         headers: {
             'Content-type': 'application/json'
         },
