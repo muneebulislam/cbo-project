@@ -20,12 +20,15 @@
     </nav>
     <main class="main">
         <div class="inputs">
+            <label>Name:</label>
             <input type="text" id="name-input" placeholder="Enter employee name">
+            <label>Email:</label>
             <input type="text" placeholder="Enter email" id="email-input" name="email-input">
+            <label>Employee Id:</label>
             <input type="text" placeholder="Enter Employee id" id="id-input" name="id-input">
             <button type="button" id="submit">Submit</button>
 
-            <input placeholder="search by name" id="search-input">
+            <input type="text" placeholder="search by name" id="search-input">
             <button type="button" id="search-btn">Search</button>
         </div>
         <table id="table">
@@ -41,7 +44,7 @@
             <tbody id="tbody"></tbody>
         </table>
 
-        <section hidden id="update-row">
+        <section hidden="true" id="update-row">
             <label>Enter New Email:</label>
             <input type="text" id="update-email-input">
             <button type="button" id="update-btn">Update</button>

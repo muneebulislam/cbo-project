@@ -18,12 +18,12 @@ router.post('/insert', (request, response) => {
     const {
         name, 
         email, 
-        employee_id,
+        employee_Id,
         first_employed 
     } = request.body;
     const db = staffModel.getStaffModelInstance();
 
-    const result = db.insertNewRecord(name, email, employee_id, first_employed );
+    const result = db.insertNewRecord(name, email, employee_Id, first_employed );
 
     result
         .then(data => response.json({

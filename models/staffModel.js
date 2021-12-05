@@ -24,7 +24,7 @@ class StaffModel {
     async createTable() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "CREATE TABLE IF NOT EXISTS staff (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), employee_Id VARCHAR(255) , first_employed VARCHAR(50), PRIMARY KEY (id))";
+                const query = "CREATE TABLE IF NOT EXISTS staff (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), employee_Id VARCHAR(255), first_employed VARCHAR(50), PRIMARY KEY (id))";
 
                 con.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
@@ -100,7 +100,7 @@ class StaffModel {
         try {
             id = parseInt(id, 10); 
             const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE staff SET email = ?, WHERE id = ?";
+                const query = "UPDATE staff SET email = ? WHERE id = ?";
     
                 con.query(query, [email, id] , (err, result) => {
                     if (err) reject(new Error(err.message));

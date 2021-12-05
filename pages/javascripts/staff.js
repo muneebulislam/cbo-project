@@ -40,7 +40,7 @@ function deleteRowById(id) {
 function handleEditRow(id) {
     const updateSection = document.getElementById('update-row');
     updateSection.hidden = false;
-    document.getElementById('update-email-input').value;
+    document.getElementById('update-email-input').dataset.id = id;
 }
 
 updateBtn.onclick = function() {
@@ -54,7 +54,7 @@ updateBtn.onclick = function() {
             'Content-type' : 'application/json'
         },
         body: JSON.stringify({
-            id: updateEmailInput,
+            id: updateEmailInput.dataset.id,
             email: updateEmailInput.value
         })
     })
@@ -95,24 +95,21 @@ function insertRowIntoTable(data) {
 
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
-            if (key === 'first_employed') {
-                data[key] = new Date(data[key]).toLocaleString();
-            }
             tableHtml += `<td>${data[key]}</td>`;
         }
     }
 
-    tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
-    tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
-
+    tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</button></td>`;
+    tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</button></td>`;
     tableHtml += "</tr>";
 
     if (isTableData) {
         table.innerHTML = tableHtml;
     } else {
-        const newRow = table.insertRow();
-        newRow.innerHTML = tableHtml;
+    
+        tableHtml+= table;
     }
+    location.reload();
 }
 
 function loadHTMLTable(myData) {
@@ -130,7 +127,7 @@ function loadHTMLTable(myData) {
        <td>${dataObject[i].employee_Id}</td>
        <td>${dataObject[i].first_employed}</td>
        <td><button class="delete-row-btn" data-id=${dataObject[i].id}>Delete</button></td>
-       <button class="edit-row-btn" data-id=${dataObject[i].id}>Edit</button></td>
+       <td><button class="edit-row-btn" data-id=${dataObject[i].id}>Edit</button></td>
        </tr>`;
        newTableBody += tableRow;
     }
