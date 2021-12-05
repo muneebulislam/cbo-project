@@ -58,26 +58,6 @@ button {
   align-items: center;
 }
 
-table, td, th {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-table {
-  width: 90%;
-  border-collapse: collapse;
-  margin: 10px;
-}
-th {
-	text-align: left;
-}
-
-td {
-	text-align: left;
-  height: 30px;
-  vertical-align: bottom;
-}
-
 * {
   box-sizing: border-box;
 }
