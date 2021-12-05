@@ -24,7 +24,7 @@ class StaffModel {
     async createTable() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "CREATE TABLE IF NOT EXISTS staff (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), employee_Id int , first_employed VARCHAR(50), PRIMARY KEY (id))";
+                const query = "CREATE TABLE IF NOT EXISTS staff (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), employee_Id VARCHAR(255) , first_employed VARCHAR(50), PRIMARY KEY (id))";
 
                 con.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
@@ -55,13 +55,12 @@ class StaffModel {
     }
 
 
-    async insertNewRecord(name, employee_Id, email, employee_id, first_employed ) {
+    async insertNewRecord(name, email, employeeId, date) {
         try {
-            const date = new Date().toLocaleDateString();
             const insertId = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO staff (name, employee_Id, email, employee_id, first_employed) VALUES (?,?,?,?);";
+                const query = "INSERT INTO staff (name, email, employee_Id, first_employed) VALUES (?,?,?,?)";
 
-                con.query(query, [name, employee_Id, email, employee_id, first_employed] , (err, result) => {
+                con.query(query, [name, email, employeeId, date] , (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.insertId);
                 })
@@ -69,8 +68,8 @@ class StaffModel {
             return {
                 id : insertId,
                 name : name,
-                employee_Id: employee_Id,
                 email: email,
+                employee_Id: employeeId,
                 first_employed: date
             };
         } catch (error) {
@@ -101,7 +100,7 @@ class StaffModel {
         try {
             id = parseInt(id, 10); 
             const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE staff SET email = ? WHERE id = ?";
+                const query = "UPDATE staff SET email = ?, WHERE id = ?";
     
                 con.query(query, [email, id] , (err, result) => {
                     if (err) reject(new Error(err.message));

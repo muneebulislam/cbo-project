@@ -14,11 +14,11 @@ document.getElementById('tbody').addEventListener('click', function(event) {
     }
 });
 
-const updateBtn = document.getElementById('update-row-btn');
+const updateBtn = document.getElementById('update-btn');
 const searchBtn = document.getElementById('search-btn');
 
 searchBtn.onclick = function() {
-    const searchValue = document.getElementById('search-value');('search-input').value;
+    const searchValue = document.getElementById('search-input').value;
 
     fetch('http://localhost:8080/staff/search/' + searchValue)
     .then(response => response.json())
@@ -40,12 +40,11 @@ function deleteRowById(id) {
 function handleEditRow(id) {
     const updateSection = document.getElementById('update-row');
     updateSection.hidden = false;
-    document.getElementById('update-email-input').dataset.id = id;
+    document.getElementById('update-email-input').value;
 }
 
 updateBtn.onclick = function() {
     const updateEmailInput = document.getElementById('update-email-input');
-
 
     console.log(updateEmailInput);
 
@@ -55,7 +54,7 @@ updateBtn.onclick = function() {
             'Content-type' : 'application/json'
         },
         body: JSON.stringify({
-            id: updateEmailInput.dataset.id,
+            id: updateEmailInput,
             email: updateEmailInput.value
         })
     })
@@ -68,7 +67,7 @@ updateBtn.onclick = function() {
 }
 
 
-const addBtn = document.getElementById('add-name-btn');
+const addBtn = document.getElementById('submit');
 
 addBtn.onclick = function () {
     const nameInput = document.getElementById('name-input').value;
@@ -90,14 +89,14 @@ addBtn.onclick = function () {
 function insertRowIntoTable(data) {
     console.log(data);
     const table = document.getElementById('tbody');
-    const isTableData = table.getElementsByClassName('no-data');
+    const isTableData = table.getElementsByClassName('.no-data');
 
     let tableHtml = "<tr>";
 
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
             if (key === 'first_employed') {
-                data[key] = new Date(data[key]).toLocaleDateString();
+                data[key] = new Date(data[key]).toLocaleString();
             }
             tableHtml += `<td>${data[key]}</td>`;
         }
@@ -116,12 +115,12 @@ function insertRowIntoTable(data) {
     }
 }
 
-function LoadHTMLTable(myData) {
+function loadHTMLTable(myData) {
     if (myData.length === 0) {
-        document.getElementById("tbody").innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+        document.getElementById("tbody").innerHTML = "<tr><td class='no-data' colspan='7'>No Data</td></tr>";
         return;
     }
-    let tableContent = "";
+    let newTableBody = "";
     let dataObject = myData;
     for (let i = 0; i < dataObject.length; i++) {
       let tableRow = `<tr>
@@ -130,9 +129,11 @@ function LoadHTMLTable(myData) {
        <td>${dataObject[i].email}</td>
        <td>${dataObject[i].employee_Id}</td>
        <td>${dataObject[i].first_employed}</td>
+       <td><button class="delete-row-btn" data-id=${dataObject[i].id}>Delete</button></td>
+       <button class="edit-row-btn" data-id=${dataObject[i].id}>Edit</button></td>
        </tr>`;
-      tableContent += tableRow;
+       newTableBody += tableRow;
     }
-
-    document.getElementById("tbody").innerHTML = tableContent;
+    
+    document.getElementById("tbody").innerHTML = newTableBody;
   }

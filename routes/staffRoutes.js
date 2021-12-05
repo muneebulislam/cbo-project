@@ -16,11 +16,14 @@ router.get('/createTable', (request, response) => {
 // create new staff
 router.post('/insert', (request, response) => {
     const {
-        name
+        name, 
+        email, 
+        employee_id,
+        first_employed 
     } = request.body;
     const db = staffModel.getStaffModelInstance();
 
-    const result = db.insertNewName(name);
+    const result = db.insertNewRecord(name, email, employee_id, first_employed );
 
     result
         .then(data => response.json({
@@ -46,14 +49,11 @@ router.get('/getAll', (request, response) => {
 router.patch('/update', (request, response) => {
     const {
         id,
-        name,
-        email,
-        employee_Id,
-        first_employed
+        email
     } = request.body;
     const db = staffModel.getStaffModelInstance();
 
-    const result = db.updateNameById(id, name, employee_Id, email, employee_id, first_employed);
+    const result = db.updateNameById(id,email);
 
     result
         .then(data => response.json({
