@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link rel="stylesheet" type="text/css" href="css/staff.css">
@@ -28,8 +27,15 @@
             <input type="text" placeholder="Enter Employee id" id="id-input" name="id-input">
             <button type="button" id="submit">Submit</button>
 
+            <label>Search Name:</label>
             <input type="text" placeholder="search by name" id="search-input">
-            <button type="button" id="search-btn">Search</button>
+            <button type="button" id="search-btn">Search Name</button>
+
+            <section hidden="true" id="update-row">
+                <label>Enter New Email:</label>
+                <input type="text" id="update-email-input">
+                <button type="button" id="update-btn">Update</button>
+            </section>
         </div>
         <table id="table">
             <thead>
@@ -44,11 +50,6 @@
             <tbody id="tbody"></tbody>
         </table>
 
-        <section hidden="true" id="update-row">
-            <label>Enter New Email:</label>
-            <input type="text" id="update-email-input">
-            <button type="button" id="update-btn">Update</button>
-        </section>
     </main>
     <script src="javascripts/staff.js"></script>
 </body>
