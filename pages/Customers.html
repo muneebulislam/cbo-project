@@ -33,25 +33,25 @@
         <div class="c-inputs">
             <section hidden="true" id='add-sec'>
                 <label>Name:</label>
-                <input type="text" id="c-name-input" placeholder="Enter cutomer name">
+                <input type="text" id="c-name-input" placeholder="Enter customer name">
 
                 <label>Email:</label>
                 <input type="text" placeholder="Enter email" id="c-email-input" name="email-input">
 
                 <label>Customer Id:</label>
-                <input type="text" placeholder="Enter Cutomer id" id="c-id-input" name="id-input">
+                <input type="text" placeholder="Enter Customer id" id="c-id-input" name="id-input">
 
                 <label>Write Report:</label>
-                <textarea type="text" placeholder="Enter Report about the customer" id="textarea" name="textarea">
+                <textarea type="text" placeholder="Enter Report about the customer" id="report" rows="10" cols="50">
                 </textarea>
 
-                <button type="button" id="c-submit">Submit</button>
+                <button type="button" id="submit">Submit</button>
             </section>
 
             <section hidden="true" id="delete-sec">
-                <label>Delete Name:</label>
-                <input type="text" id="c-delete" placeholder="Enter Name You Want to Delete">
-                <button type="button" id="c-delete-btn">Update</button>
+                <label>Delete Customer By Customer Id:</label>
+                <input type="text" id="c-delete" placeholder="Enter Customer Id You Want to Delete">
+                <button type="button" id="c-delete-btn">Delete</button>
             </section>
 
             <section hidden="true" id="search-sec">
@@ -61,9 +61,19 @@
             </section>
 
             <section hidden="true" id="update-row-sec">
+                <label>Enter Customer Id you want to update:</label>
+                <input type="text" id="c-update-ci-input" placeholder="Enter Customer Id">
                 <label>Enter New Email:</label>
                 <input type="text" id="c-update-email-input" placeholder="Enter New Email">
                 <button type="button" id="c-update-btn">Update</button>
+            </section>
+
+            <section hidden="true" id="update-report-sec">
+                <label>Enter Customer Id you want to update:</label>
+                <input type="text" id="update-report-ci-input" placeholder="Enter Customer Id">
+                <label>Enter New Report for the customer:</label>
+                <textarea type="text" id="c-update-report-input" placeholder="Enter New Report for the customer" rows="10" cols="50"> </textarea>
+                <button type="button" id="c-update-report-btn">Update Report</button>
             </section>
 
             

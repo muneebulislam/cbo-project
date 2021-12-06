@@ -1,36 +1,26 @@
 const mysql = require('mysql');
+const db = require('./db');
+
+const dbInstance = db.getDbInstance();
+const con = dbInstance.getConnection(mysql);
 let instance = null;
 
-const con = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'admin',
-    database: 'cbo-db',
-});
-
-con.connect((err) => {
-    if (err) {
-        console.log(err.message);
-    }
-});
-
-
 class CustomerModel {
-    static getStaffModelInstance() {
-        return instance ? instance : new StaffModel();
+    static getCustomerModelInstance() {
+        return instance ? instance : new CustomerModel();
     }
 
     async createTable() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "CREATE TABLE IF NOT EXISTS staff (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), employee_Id VARCHAR(255), first_employed VARCHAR(50), PRIMARY KEY (id))";
+                const query = "CREATE TABLE IF NOT EXISTS customers (id int NOT NULL AUTO_INCREMENT, name VARCHAR(255), email VARCHAR(255), customer_Id VARCHAR(255), report TEXT, PRIMARY KEY (id))";
 
                 con.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
                     resolve(results);
                 })
             });
-            // console.log(response);
+        
             return response;
         } catch (error) {
             console.log(error);
@@ -39,7 +29,7 @@ class CustomerModel {
     async getAllData() {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM staff ORDER BY first_employed DESC";
+                const query = "SELECT * FROM customers ORDER BY customer_Id DESC";
 
                 con.query(query, (err, results) => {
                     if (err) reject(new Error(err.message));
@@ -54,22 +44,22 @@ class CustomerModel {
     }
 
 
-    async insertNewRecord(name, email, employeeId, date) {
+    async insertNewRecord(name, email, customerId, report) {
         try {
             const insertId = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO staff (name, email, employee_Id, first_employed) VALUES (?,?,?,?)";
+                const query = "INSERT INTO customers (name, email, customer_Id, report) VALUES (?,?,?,?)";
 
-                con.query(query, [name, email, employeeId, date] , (err, result) => {
+                con.query(query, [name, email, customerId, report], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.insertId);
                 })
             });
             return {
-                id : insertId,
-                name : name,
+                id: insertId,
+                name: name,
                 email: email,
-                employee_Id: employeeId,
-                first_employed: date
+                customer_Id: customerId,
+                report: report
             };
         } catch (error) {
             console.log(error);
@@ -78,16 +68,15 @@ class CustomerModel {
 
     async deleteRowById(id) {
         try {
-            id = parseInt(id, 10); 
             const response = await new Promise((resolve, reject) => {
-                const query = "DELETE FROM staff WHERE id = ?";
-    
-                con.query(query, [id] , (err, result) => {
+                const query = "DELETE FROM customers WHERE customer_Id=?";
+
+                con.query(query, [id], (err, result) => {
                     if (err) reject(new Error(err.message));
                     resolve(result.affectedRows);
                 })
             });
-    
+
             return response === 1 ? true : false;
         } catch (error) {
             console.log(error);
@@ -95,41 +84,60 @@ class CustomerModel {
         }
     }
 
-//     async updateNameById(id, email) {
-//         try {
-//             id = parseInt(id, 10); 
-//             const response = await new Promise((resolve, reject) => {
-//                 const query = "UPDATE staff SET email = ? WHERE id = ?";
+    async updateEmailById(customerId, email) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE customers SET email = ? WHERE customer_Id = ?";
+
+                con.query(query, [email, customerId], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+
+    async updateReportById(customerId, report) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE customers SET report = ? WHERE customer_Id = ?";
+
+                con.query(query, [report, customerId], (err, result) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            return response === 1 ? true : false;
+
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
     
-//                 con.query(query, [email, id] , (err, result) => {
-//                     if (err) reject(new Error(err.message));
-//                     resolve(result.affectedRows);
-//                 })
-//             });
-    
-//             return response === 1 ? true : false;
-//         } catch (error) {
-//             console.log(error);
-//             return false;
-//         }
-//     }
 
-//     async searchByName(name) {
-//         try {
-//             const response = await new Promise((resolve, reject) => {
-//                 const query = "SELECT * FROM staff WHERE name = ?;";
+    async searchByName(name) {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM customers WHERE name = ?";
 
-//                 con.query(query, [name], (err, results) => {
-//                     if (err) reject(new Error(err.message));
-//                     resolve(results);
-//                 })
-//             });
+                con.query(query, [name], (err, results) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(results);
+                })
+            });
 
-//             return response;
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// }
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 module.exports = CustomerModel;

@@ -5,20 +5,6 @@ const dbInstance = db.getDbInstance();
 const con = dbInstance.getConnection(mysql);
 let instance = null;
 
-// const con = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'admin',
-//     database: 'cbo-db',
-// });
-
-// con.connect((err) => {
-//     if (err) {
-//         console.log(err.message);
-//     }
-// });
-
-
 class StaffModel {
     static getStaffModelInstance() {
         return instance ? instance : new StaffModel();

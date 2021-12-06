@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const staffModel = require('../models/customerModel');
+const customerModel = require('../models/customerModel');
 
 // create table.
 router.get('/createTable', (request, response) => {
-    const db = staffModel.getStaffModelInstance();
+    const db = customerModel.getCustomerModelInstance();
 
     const result = db.createTable();
 
@@ -34,7 +34,7 @@ router.post('/insert', (request, response) => {
 
 // get all the staff members
 router.get('/getAll', (request, response) => {
-    const db = staffModel.getCustomerModelInstance();
+    const db = customerModel.getCustomerModelInstance();
 
     const result = db.getAllData();
 
@@ -45,38 +45,61 @@ router.get('/getAll', (request, response) => {
         .catch(err => console.log(err));
 })
 
-// // update staff members
-// router.patch('/update', (request, response) => {
-//     const {
-//         id,
-//         email
-//     } = request.body;
-//     const db = staffModel.getStaffModelInstance();
+// update customer 
+router.patch('/update', (request, response) => {
+    const customer_Id = request.body.customer_Id;
+    const  email= request.body.email;
+    const db = customerModel.getCustomerModelInstance();
 
-//     const result = db.updateNameById(id, email);
+    const result = db.updateEmailById(customer_Id, email);
 
-//     result
-//         .then(data => response.json({
-//             success: data
-//         }))
-//         .catch(err => console.log(err));
-// });
+    result
+        .then(data => response.json({
+            success: data
+        }))
+        .catch(err => console.log(err));
+});
 
-// // delete staff member
-// router.delete('/delete/:id', (request, response) => {
-//     const {
-//         id
-//     } = request.params;
-//     const db = staffModel.getStaffModelInstance();
+router.patch('/update-report', (request, response) => {
+    const customer_Id = request.body.customer_Id;
+    const  report= request.body.report;
+    const db = customerModel.getCustomerModelInstance();
 
-//     const result = db.deleteRowById(id);
+    const result = db.updateReportById(customer_Id, report);
 
-//     result
-//         .then(data => response.json({
-//             success: data
-//         }))
-//         .catch(err => console.log(err));
-// });
+    result
+        .then(data => response.json({
+            success: data
+        }))
+        .catch(err => console.log(err));
+});
+
+// delete customer
+router.delete('/delete/:id', (request, response) => {
+    const customer_Id = request.params.id;
+    const db = customerModel.getCustomerModelInstance();
+
+    const result = db.deleteRowById(customer_Id);
+
+    result
+        .then(data => response.json({
+            success: data
+        }))
+        .catch(err => console.log(err));
+});
+
+router.delete('/repo', (request, response) => {
+    const customer_Id = request.params.id;
+    const db = customerModel.getCustomerModelInstance();
+
+    const result = db.deleteRowById(customer_Id);
+
+    result
+        .then(data => response.json({
+            success: data
+        }))
+        .catch(err => console.log(err));
+});
 
 // router.get('/search/:name', (request, response) => {
 //     const {

@@ -1,160 +1,173 @@
-function processSelection(){
-    var selected = document.getElementById('select-option');
-    if (selected.value == "add") {
-      document.getElementById("add-sec").hidden = false;
-    }
+function processSelection() {
+  var selected = document.getElementById('select-option');
+
+  switch (selected.value) {
+    case "add":
+      processOption(0);
+      break;
+
+    case "delete":
+      processOption(1);
+      break;
+
+    case "update":
+      processOption(2);
+      break;
+
+    case "show":
+      processOption(3);
+      domLoad();
+      break;
+
+    case "add-report":
+      processOption(4);
+      break;
   }
+}
 
-    // switch(selected.value) {
-    //     case "add":
-    //         document.getElementById("add-sec").hidden = false;
-    //       break;
-    //     case "delete":
-    //       document.getElementById("delete-sec").hidden = false;
-    //       break;
-    //       case "update":
-    //         document.getElementById("update-row-sec").hidden = false;
-    //         break;
-    //         case "show":
-    //           document.getElementById("show-sec").hidden = false;
-    //           break;
-    //     default:
-    //       // code block
-// }
+function processOption(index){
+  const list = ["add-sec", "delete-sec", "update-row-sec","show-sec","update-report-sec"]
+   list.forEach((x,ind) =>{
+     if(ind==index){document.getElementById(x).hidden= false;}
+     else{document.getElementById(x).hidden= true;}
+   })
+}
 
-// document.addEventListener('DOMContentLoaded', function () {
-//   fetch('http://localhost:8080/staff/getAll')
-//       .then(response => response.json())
-//       .then(data => loadData(data['data']));
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('http://localhost:8080/customer/getAll')
+    .then(response => response.json())
+    .then(data => loadData(data['data']));
 
-// });
+});
 
-// document.getElementById('tbody').addEventListener('click', function (event) {
-//   if (event.target.className === "delete-row-btn") {
-//       deleteRowById(event.target.dataset.id);
-//   }
-//   if (event.target.className === "edit-row-btn") {
-//       handleEditRow(event.target.dataset.id);
-//   }
-// });
-
-// const updateBtn = document.getElementById('update-btn');
-// const searchBtn = document.getElementById('search-btn');
-
-// searchBtn.onclick = function () {
-//   const searchValue = document.getElementById('search-input').value;
-
-//   fetch('http://localhost:8080/staff/search/' + searchValue)
-//       .then(response => response.json())
-//       .then(data => loadData(data['data']));
-// }
-
-// function deleteRowById(id) {
-//   fetch('http://localhost:8080/staff/delete/' + id, {
-//       method: 'DELETE'
-//   })
-//       .then(response => response.json())
-//       .then(data => {
-//           if (data.success) {
-//               location.reload();
-//           }
-//       });
-// }
-
-// function handleEditRow(id) {
-//   const updateSection = document.getElementById('update-row');
-//   updateSection.hidden = false;
-//   document.getElementById('update-email-input').dataset.id = id;
-// }
-
-// updateBtn.onclick = function () {
-//   const updateEmailInput = document.getElementById('update-email-input');
-
-//   console.log(updateEmailInput);
-
-//   fetch('http://localhost:8080/staff/update', {
-//       method: 'PATCH',
-//       headers: {
-//           'Content-type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//           id: updateEmailInput.dataset.id,
-//           email: updateEmailInput.value
-//       })
-//   })
-//       .then(response => response.json())
-//       .then(data => {
-//           if (data.success) {
-//               location.reload();
-//           }
-//       })
-// }
+function domLoad() {
+  fetch('http://localhost:8080/customer/getAll')
+    .then(response => response.json())
+    .then(data => loadData(data['data']));
+}
 
 
-// const addBtn = document.getElementById('submit');
+const searchBtn = document.getElementById('search-btn');
+searchBtn.onclick = function () {
+  const searchValue = document.getElementById('search-input').value;
 
-// addBtn.onclick = function () {
-//   const nameInput = document.getElementById('name-input').value;
-//   const emailInput = document.getElementById('email-input').value;
-//   const idInput = document.getElementById('id-input').value;
-//   const fistEmployed = new Date().toLocaleDateString();
+  fetch('http://localhost:8080/staff/search/' + searchValue)
+    .then(response => response.json())
+    .then(data => loadData(data['data']));
+}
 
-//   fetch('http://localhost:8080/staff/insert', {
-//       headers: {
-//           'Content-type': 'application/json'
-//       },
-//       method: 'POST',
-//       body: JSON.stringify({ name: nameInput, email: emailInput, employee_Id: idInput, first_employed: fistEmployed })
-//   })
-//       .then(response => response.json())
-//       .then(data => insertRowIntoTable(data['data']));
-// }
+const deleteBtn = document.getElementById('c-delete-btn');
+deleteBtn.addEventListener('click', function () {
+  let id = document.getElementById('c-delete').value;
+  deleteRowById(id);
+})
+function deleteRowById(id) {
+  fetch('http://localhost:8080/customer/delete/' + id, {
+    method: 'DELETE'
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        domLoad();
+      }
+    });
+}
 
-// function insertRowIntoTable(data) {
-//   console.log(data);
-//   const table = document.getElementById('tbody');
-//   const isTableData = table.getElementsByClassName('.no-data');
 
-//   let tableHtml = "<tr>";
+const updateBtn = document.getElementById('c-update-btn');
+updateBtn.onclick = function () {
 
-//   for (var key in data) {
-//       if (data.hasOwnProperty(key)) {
-//           tableHtml += `<td>${data[key]}</td>`;
-//       }
-//   }
+  const customerId = document.getElementById('c-update-ci-input').value;
+  const updateEmailInput = document.getElementById('c-update-email-input').value;
 
-//   tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</button></td>`;
-//   tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</button></td>`;
-//   tableHtml += "</tr>";
+  fetch('http://localhost:8080/customer/update', {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      customer_Id: customerId,
+      email: updateEmailInput
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+        // domLoad();
+      }
+    })
+}
 
-//   if (isTableData) {
-//       table.innerHTML = tableHtml;
-//   } else {
+const updateReportBtn = document.getElementById('c-update-report-btn');
+updateReportBtn.onclick = function () {
 
-//       tableHtml += table;
-//   }
-//   location.reload();
-// }
+  const customerId = document.getElementById('update-report-ci-input').value;
+  const updateReportInput = document.getElementById('c-update-report-input').value;
 
-// function loadData(myData) {
-//   if (myData.length === 0) {
-//       document.getElementById("tbody").innerHTML = "<tr><td class='no-data' colspan='7'>No Data</td></tr>";
-//       return;
-//   }
-//   let newTableBody = "";
-//   let dataObject = myData;
-//   for (let i = 0; i < dataObject.length; i++) {
-//       let tableRow = `<tr>
-//      <td>${dataObject[i].id}</td>
-//      <td>${dataObject[i].name}</td>
-//      <td>${dataObject[i].email}</td>
-//      <td>${dataObject[i].employee_Id}</td>
-//      <td>${dataObject[i].first_employed}</td>
-//      <td><button class="delete-row-btn" data-id=${dataObject[i].id}>Delete</button></td>
-//      <td><button class="edit-row-btn" data-id=${dataObject[i].id}>Edit</button></td>
-//      </tr>`;
-//       newTableBody += tableRow;
-//   }
+  fetch('http://localhost:8080/customer/update-report', {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      customer_Id: customerId,
+      report: updateReportInput
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+        // domLoad();
+      }
+    })
+}
 
-//   document.getElementById("tbody").innerHTML = newTableBody;
-// }
+
+
+
+const addBtn = document.getElementById('submit');
+addBtn.onclick = function () {
+  const nameInput = document.getElementById('c-name-input').value;
+  const emailInput = document.getElementById('c-email-input').value;
+  const idInput = document.getElementById('c-id-input').value;
+  // const fistEmployed = new Date().toLocaleDateString();
+  const report = document.getElementById('report').value;
+
+  fetch('http://localhost:8080/customer/insert', {
+    headers: {
+      'Content-type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      name: nameInput,
+      email: emailInput,
+      customer_Id: idInput,
+      report: report
+    })
+  })
+    .then(response => response.json())
+    .then(data => insertRowIntoTable(data['data']));
+}
+
+function insertRowIntoTable(data) {
+  console.log(data);
+  var showSection = document.getElementById('show-sec');
+
+  let div = `<div> <p>Name: ${data.name} emil: ${data.email} Customer Id: ${data.customer_Id}</p>
+  <textarea >${data.report}</textarea></div>`
+  div += showSection;
+  document.getElementById('show-sec').innerHTML = div;
+  location.reload();
+}
+
+function loadData(data) {
+  let displayData = "";
+  for (let i = 0; i < data.length; i++) {
+    let div = `<div> <p>Name: ${data[i].name} emil: ${data[i].email} Customer Id: ${data[i].customer_Id}</p>
+  <textarea >${data[i].report}</textarea></div>`;
+    displayData += div;
+  }
+  document.getElementById('show-sec').innerHTML = displayData;
+}

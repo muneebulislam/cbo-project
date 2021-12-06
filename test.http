@@ -36,6 +36,16 @@ content-type: application/json
 DELETE  http://localhost:8080/staff/DELETE/1 HTTP/1.1
 content-type: application/json
 
+###
+DELETE  http://localhost:8080/customer/delete/2 HTTP/1.1
+content-type: application/json
 
+###
+PATCH  http://localhost:8080/customer/update-report
+content-type: application/json
 
+{
+    "id": "2",
+    "report": "new"
+}
 
