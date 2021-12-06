@@ -1,18 +1,41 @@
-GET http://localhost:8080/users
+GET http://localhost:8080/staff/createTable
 
 ###
-POST http://localhost:8080/insert 
+POST http://localhost:8080/staff/insert 
 content-type: application/json
 
 {
-    "name": "rohn"
+    "name": "Ralph",
+    "email": "ralph@gmail.com",
+    "employee_Id": "123",
+    "first_empoyed": "2/3/1988"
 }
 
-###
-POST http://localhost:8080/users/login 
+POST http://localhost:8080/staff/insert 
 content-type: application/json
 
 {
     "name": "john",
-    "password": "mypas"
+    "email": "john@gmail.com",
+    "employee_Id": "124"
 }
+###
+
+GET http://localhost:8080/staff/getAll
+
+###
+PATCH  http://localhost:8080/staff/update
+content-type: application/json
+
+{
+    "id": "1",
+    "email": "chngedRalph@gmail"
+}
+
+###
+DELETE  http://localhost:8080/staff/DELETE/1 HTTP/1.1
+content-type: application/json
+
+
+
+

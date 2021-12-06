@@ -1,19 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <title>Customers Page</title>
 </head>
+
 <body>
     <nav>
         <div class="topnav">
             <a class="active" href="http://localhost:8080/Landing.html">Landing</a>
             <a href="http://localhost:8080/Customers.html">Customers</a>
             <a href="http://localhost:8080/Staff.html">Staff</a>
-          </div>
+        </div>
     </nav>
-    <h1>Customers</h1>
+    <main class="main">
+        <div>
+            <label for="select-option">Choose an Action:</label>
+            <select name="select-option" id="select-option" onchange= "processSelection()">
+                <option disabled autofocus selected>Choose Action</option>
+                <option value="add">Add Customer</option>
+                <option value="delete">Delete Customer</option>
+                <option value="update">Update Customer</option>
+                <option value="show">Show Customers</option>
+                <option value="add-report">Add New Report</option>
+            </select>
+        </div>
+
+
+        <div class="c-inputs">
+            <section hidden="true" id='add-sec'>
+                <label>Name:</label>
+                <input type="text" id="c-name-input" placeholder="Enter cutomer name">
+
+                <label>Email:</label>
+                <input type="text" placeholder="Enter email" id="c-email-input" name="email-input">
+
+                <label>Customer Id:</label>
+                <input type="text" placeholder="Enter Cutomer id" id="c-id-input" name="id-input">
+
+                <label>Write Report:</label>
+                <textarea type="text" placeholder="Enter Report about the customer" id="textarea" name="textarea">
+                </textarea>
+
+                <button type="button" id="c-submit">Submit</button>
+            </section>
+
+            <section hidden="true" id="delete-sec">
+                <label>Delete Name:</label>
+                <input type="text" id="c-delete" placeholder="Enter Name You Want to Delete">
+                <button type="button" id="c-delete-btn">Update</button>
+            </section>
+
+            <section hidden="true" id="search-sec">
+            <label>Search Name:</label>
+            <input type="text" placeholder="search by name" id="c-search-input">
+            <button type="button" id="search-btn">Search Name</button>
+            </section>
+
+            <section hidden="true" id="update-row-sec">
+                <label>Enter New Email:</label>
+                <input type="text" id="c-update-email-input" placeholder="Enter New Email">
+                <button type="button" id="c-update-btn">Update</button>
+            </section>
+
+            
+            <section hidden="true" id="show-sec">
+     
+            </section>
+        </div>
+       
+    </main>
+    <script src="javascripts/customer.js"></script>
 </body>
+
 </html>

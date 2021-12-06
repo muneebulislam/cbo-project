@@ -1,25 +1,21 @@
 const mysql = require('mysql');
-const db = require('./db');
-
-const dbInstance = db.getDbInstance();
-const con = dbInstance.getConnection(mysql);
 let instance = null;
 
-// const con = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'admin',
-//     database: 'cbo-db',
-// });
+const con = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'admin',
+    database: 'cbo-db',
+});
 
-// con.connect((err) => {
-//     if (err) {
-//         console.log(err.message);
-//     }
-// });
+con.connect((err) => {
+    if (err) {
+        console.log(err.message);
+    }
+});
 
 
-class StaffModel {
+class CustomerModel {
     static getStaffModelInstance() {
         return instance ? instance : new StaffModel();
     }
@@ -99,41 +95,41 @@ class StaffModel {
         }
     }
 
-    async updateNameById(id, email) {
-        try {
-            id = parseInt(id, 10); 
-            const response = await new Promise((resolve, reject) => {
-                const query = "UPDATE staff SET email = ? WHERE id = ?";
+//     async updateNameById(id, email) {
+//         try {
+//             id = parseInt(id, 10); 
+//             const response = await new Promise((resolve, reject) => {
+//                 const query = "UPDATE staff SET email = ? WHERE id = ?";
     
-                con.query(query, [email, id] , (err, result) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(result.affectedRows);
-                })
-            });
+//                 con.query(query, [email, id] , (err, result) => {
+//                     if (err) reject(new Error(err.message));
+//                     resolve(result.affectedRows);
+//                 })
+//             });
     
-            return response === 1 ? true : false;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    }
+//             return response === 1 ? true : false;
+//         } catch (error) {
+//             console.log(error);
+//             return false;
+//         }
+//     }
 
-    async searchByName(name) {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM staff WHERE name = ?;";
+//     async searchByName(name) {
+//         try {
+//             const response = await new Promise((resolve, reject) => {
+//                 const query = "SELECT * FROM staff WHERE name = ?;";
 
-                con.query(query, [name], (err, results) => {
-                    if (err) reject(new Error(err.message));
-                    resolve(results);
-                })
-            });
+//                 con.query(query, [name], (err, results) => {
+//                     if (err) reject(new Error(err.message));
+//                     resolve(results);
+//                 })
+//             });
 
-            return response;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
+//             return response;
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// }
 
-module.exports = StaffModel;
+module.exports = CustomerModel;

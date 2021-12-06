@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const staffModel = require('./models/staffModel');
 const staffRoutes = require('./routes/staffRoutes');
 
 const app = express();

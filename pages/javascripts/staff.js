@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     fetch('http://localhost:8080/staff/getAll')
-    .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
-    
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
+
 });
 
-document.getElementById('tbody').addEventListener('click', function(event) {
+document.getElementById('tbody').addEventListener('click', function (event) {
     if (event.target.className === "delete-row-btn") {
         deleteRowById(event.target.dataset.id);
     }
@@ -17,24 +17,24 @@ document.getElementById('tbody').addEventListener('click', function(event) {
 const updateBtn = document.getElementById('update-btn');
 const searchBtn = document.getElementById('search-btn');
 
-searchBtn.onclick = function() {
+searchBtn.onclick = function () {
     const searchValue = document.getElementById('search-input').value;
 
     fetch('http://localhost:8080/staff/search/' + searchValue)
-    .then(response => response.json())
-    .then(data => loadHTMLTable(data['data']));
+        .then(response => response.json())
+        .then(data => loadHTMLTable(data['data']));
 }
 
 function deleteRowById(id) {
     fetch('http://localhost:8080/staff/delete/' + id, {
         method: 'DELETE'
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
 }
 
 function handleEditRow(id) {
@@ -43,7 +43,7 @@ function handleEditRow(id) {
     document.getElementById('update-email-input').dataset.id = id;
 }
 
-updateBtn.onclick = function() {
+updateBtn.onclick = function () {
     const updateEmailInput = document.getElementById('update-email-input');
 
     console.log(updateEmailInput);
@@ -51,19 +51,19 @@ updateBtn.onclick = function() {
     fetch('http://localhost:8080/staff/update', {
         method: 'PATCH',
         headers: {
-            'Content-type' : 'application/json'
+            'Content-type': 'application/json'
         },
         body: JSON.stringify({
             id: updateEmailInput.dataset.id,
             email: updateEmailInput.value
         })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        })
 }
 
 
@@ -80,10 +80,10 @@ addBtn.onclick = function () {
             'Content-type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({ name : nameInput, email: emailInput, employee_Id: idInput, first_employed: fistEmployed})
+        body: JSON.stringify({ name: nameInput, email: emailInput, employee_Id: idInput, first_employed: fistEmployed })
     })
-    .then(response => response.json())
-    .then(data => insertRowIntoTable(data['data']));
+        .then(response => response.json())
+        .then(data => insertRowIntoTable(data['data']));
 }
 
 function insertRowIntoTable(data) {
@@ -106,8 +106,8 @@ function insertRowIntoTable(data) {
     if (isTableData) {
         table.innerHTML = tableHtml;
     } else {
-    
-        tableHtml+= table;
+
+        tableHtml += table;
     }
     location.reload();
 }
@@ -120,7 +120,7 @@ function loadHTMLTable(myData) {
     let newTableBody = "";
     let dataObject = myData;
     for (let i = 0; i < dataObject.length; i++) {
-      let tableRow = `<tr>
+        let tableRow = `<tr>
        <td>${dataObject[i].id}</td>
        <td>${dataObject[i].name}</td>
        <td>${dataObject[i].email}</td>
@@ -129,8 +129,8 @@ function loadHTMLTable(myData) {
        <td><button class="delete-row-btn" data-id=${dataObject[i].id}>Delete</button></td>
        <td><button class="edit-row-btn" data-id=${dataObject[i].id}>Edit</button></td>
        </tr>`;
-       newTableBody += tableRow;
+        newTableBody += tableRow;
     }
-    
+
     document.getElementById("tbody").innerHTML = newTableBody;
-  }
+}
