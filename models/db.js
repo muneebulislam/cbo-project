@@ -5,7 +5,7 @@ class Db {
   }
   getConnection(mysql) {
     const con = mysql.createConnection({
-      host: "localhost",
+      host: "db1",
       user: "root",
       password: "admin",
       database: "cbo-db",

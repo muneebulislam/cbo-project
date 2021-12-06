@@ -155,7 +155,7 @@ function insertRowIntoTable(data) {
   console.log(data);
   var showSection = document.getElementById('show-sec');
 
-  let div = `<div> <p>Name: ${data.name} emil: ${data.email} Customer Id: ${data.customer_Id}</p>
+  let div = `<div> <p><Name: ${data.name} emil: ${data.email} Customer Id: ${data.customer_Id}</p>
   <textarea >${data.report}</textarea></div>`
   div += showSection;
   document.getElementById('show-sec').innerHTML = div;
@@ -165,8 +165,8 @@ function insertRowIntoTable(data) {
 function loadData(data) {
   let displayData = "";
   for (let i = 0; i < data.length; i++) {
-    let div = `<div> <p>Name: ${data[i].name} emil: ${data[i].email} Customer Id: ${data[i].customer_Id}</p>
-  <textarea >${data[i].report}</textarea></div>`;
+    let div = `<div> <p><b>Name</b> : ${data[i].name}<br><b>Email<b>:   ${data[i].email}<br> <b>Customer Id</b>:   ${data[i].customer_Id}</p>
+  <textarea >${data[i].report}</textarea><hr></div>`;
     displayData += div;
   }
   document.getElementById('show-sec').innerHTML = displayData;

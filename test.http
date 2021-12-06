@@ -1,6 +1,8 @@
 GET http://localhost:8080/staff/createTable
 
 ###
+GET http://localhost:8080/staff/createTable
+###
 POST http://localhost:8080/staff/insert 
 content-type: application/json
 
@@ -19,33 +21,5 @@ content-type: application/json
     "email": "john@gmail.com",
     "employee_Id": "124"
 }
-###
 
-GET http://localhost:8080/staff/getAll
-
-###
-PATCH  http://localhost:8080/staff/update
-content-type: application/json
-
-{
-    "id": "1",
-    "email": "chngedRalph@gmail"
-}
-
-###
-DELETE  http://localhost:8080/staff/DELETE/1 HTTP/1.1
-content-type: application/json
-
-###
-DELETE  http://localhost:8080/customer/delete/2 HTTP/1.1
-content-type: application/json
-
-###
-PATCH  http://localhost:8080/customer/update-report
-content-type: application/json
-
-{
-    "id": "2",
-    "report": "new"
-}
 
