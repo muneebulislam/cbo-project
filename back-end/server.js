@@ -5,7 +5,6 @@ const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
 const https = require("https");
-const ejs = require("ejs");
 const cookieParser = require('cookie-parser');
 const session = require("express-session");
 const passport = require("passport");
@@ -15,8 +14,6 @@ app.use(express.json()); // for parsing application/json instead of body-parser
 
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser()); // for parsing
-
-app.set("view engine", "ejs");
 
 
 
