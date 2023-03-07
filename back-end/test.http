@@ -6,3 +6,25 @@ Content-Type: application/x-www-form-urlencoded
 
 username=usr1
 &password=sec1
+
+###
+POST http://localhost:3000/register
+Content-Type: application/x-www-form-urlencoded
+
+username=usr2
+&password=sec2
+
+###
+POST http://localhost:3000/login
+Content-Type: application/x-www-form-urlencoded
+
+username=usr2
+&password=sec2
+
+# in case of failure
+###
+POST http://localhost:3000/login
+Content-Type: application/x-www-form-urlencoded
+
+username=usr2
+&password=sec1
