@@ -5,6 +5,7 @@ logs
 **/*.back.*
 
 node_modules
+/back-end/.env
 bower_components
 
 *.sublime*
